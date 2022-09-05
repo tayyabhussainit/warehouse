@@ -1,0 +1,166 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" />
+  <meta name="format-detection" content="telephone=no" />
+  <link rel="shortcut icon" type="image/png" href="/static/favicon.png?23333" />
+  <link rel="apple-touch-icon" sizes="76x76" href="/static/apple-touch-icon-76x76.png?3333" />
+  <link rel="apple-touch-icon" sizes="120x120" href="/static/apple-touch-icon-120x120.png?3333" />
+  <link rel="apple-touch-icon" sizes="152x152" href="/static/apple-touch-icon-152x152.png?3333" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png?3333" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png?3333" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png?3333" />
+  <link rel="manifest" href="/static/site.webmanifest?23333" />
+  <link rel="mask-icon" href="/static/safari-pinned-tab.svg?23333" color="#5bbad5" />
+  <meta name="msapplication-TileColor" content="#da532c" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta property="og:image" content="https://olimpfreight.com:4343/static/email-logo.jpg" />
+  <link rel="manifest" href="/static/manifest.json" />
+  <title>Olimp</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="content">
+      <div class="olimp-sign-up">
+        <div class="sign-up_header">
+          <div class="logos" style="justify-content: center;"><img
+              src="https://olimpfreight.com:4343/static/email-logo.jpg" width="60" alt="logo">
+          </div>
+          <div class="progress">
+            <div class="progress-fill" style="width: 100%;"></div>
+          </div>
+        </div>
+        <div class="sign-up_description">
+          <h2 class="sign-up_heading">Price Calculator</h2>
+        </div>
+        <div class="sign-up_form">
+          <div class="input-text">
+            <div class="input-wrapper">
+              <div class="label-wrap">
+                <div class="label">Adress 1</div>
+                <div class="w-error"></div>
+              </div>
+              <div class="control"><input type="text" required [(ngModel)]="body.address_1" placeholder="Address 1"
+                  autocomplete="off" name="address_1" class="email" value=""></div>
+              <span style="color:red" *ngIf="err_body.address_1[0] && !body.address_1">{{err_body.address_1[0]}}</span>
+            </div>
+          </div>
+          <div class="input-text">
+            <div class="input-wrapper">
+              <div class="label-wrap">
+                <div class="label">Address 2</div>
+                <div class="w-error"></div>
+              </div>
+              <div class="control"><input type="text" required [(ngModel)]="body.address_2" placeholder="Address 2"
+                  autocomplete="off" name="address_2" value="">
+                  <span style="color:red" *ngIf="err_body.address_2[0] && !body.address_2">{{err_body.address_2[0]}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="input-text">
+            <div class="input-wrapper">
+              <div class="label-wrap">
+                <div class="label">Number of Pallets</div>
+                <div class="w-error"></div>
+              </div>
+              <div class="control"><input [(ngModel)]="body.pallets" required type="number"
+                  placeholder="Number of Pallets" autocomplete="off" name="pallets" value="">
+                  <span style="color:red" *ngIf="err_body.pallets[0] && !body.pallets">{{err_body.pallets[0]}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="input-text">
+            <div class="input-wrapper">
+              <div class="label-wrap">
+                <div class="label">Start Date</div>
+                <div class="w-error"></div>
+              </div>
+              <div class="control"><input [(ngModel)]="body.start_date" type="date" required autocomplete="off"
+                  name="start_date" value="">
+                  <span style="color:red" *ngIf="err_body.start_date[0] && !body.start_date">{{err_body.start_date[0]}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="input-text">
+            <div class="input-wrapper">
+              <div class="label-wrap">
+                <div class="label">End Date</div>
+                <div class="w-error"></div>
+              </div>
+              <div class="control"><input [(ngModel)]="body.end_date" type="date" required autocomplete="off"
+                  name="end_date" value="">
+                  <span style="color:red" *ngIf="err_body.end_date[0] && !body.end_date">{{err_body.end_date[0]}}</span>
+              </div>
+            </div>
+          </div>
+
+          <br><button (click)="calculate()" type="button" class="blue full">Calculate</button>
+
+        </div>
+
+        <div class="sign-up_form" style="color: red;" *ngIf="response.msg && !response.miles">
+            {{response.msg}}
+        </div>
+        <div class="sign-up_form" *ngIf="response.origin_addresses && !response.msg">
+          <table>
+            <tr>
+              <td>
+                Origin
+              </td>
+              <td>
+                {{response.origin_addresses}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Destination
+              </td>
+              <td>
+                {{response.destination_addresses}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Distance
+              </td>
+              <td>
+                {{response.miles}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Total Price Without Fee
+              </td>
+              <td>
+                {{response.total}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Service Provider Fee
+              </td>
+              <td>
+                {{response.service_charges}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Total Price With Fee
+              </td>
+              <td>
+                {{response.over_all_total}}
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
